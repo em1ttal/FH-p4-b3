@@ -1,0 +1,233 @@
+@import './base.css';
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+/* Buttons */
+.primary-btn,
+.secondary-btn {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  min-width: 200px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: linear-gradient(45deg, #4263eb, #57d1eb);
+  color: white;
+  border: none;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(66, 99, 235, 0.3);
+}
+
+.secondary-btn:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Common Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Common Text Styles */
+.section-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  color: #1a1a2e;
+}
+
+/* Responsive Base */
+@media (max-width: 768px) {
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  #app {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+}
+
+/* Common Card Styles */
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.stat-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Common Metric Styles */
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metric-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.metric-value.completed {
+  color: #61bd4f;
+}
+.metric-value.in-progress {
+  color: #0079bf;
+}
+.metric-value.blocked {
+  color: #eb5a46;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Common Progress Bar Styles */
+.progress-bar {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  height: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.progress-fill.completed {
+  background: #61bd4f;
+}
+.progress-fill.in-progress {
+  background: #0079bf;
+}
+.progress-fill.blocked {
+  background: #eb5a46;
+}
+.progress-fill.pending {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Common Section Styles */
+.section-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+/* Common Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
