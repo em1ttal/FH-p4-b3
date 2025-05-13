@@ -24,7 +24,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" class="secondary-btn" @click="$emit('close')">Cancelar</button>
-          <button type="submit" class="primary-btn">Crear tablero</button>
+          <button type="submit" class="primary-btn">Crear Tablero</button>
         </div>
       </form>
     </div>

@@ -9,7 +9,7 @@
           <div class="form-group">
             <label>Título</label>
             <input
-              v-model="taskForm.title"
+              v-model="taskForm.time"
               type="text"
               placeholder="Título de la tarea"
               class="styled-input"
@@ -46,7 +46,7 @@
               </button>
             </div>
             <input
-              v-model="taskForm.timeEstimate"
+              v-model="taskForm.timeEstimation"
               type="number"
               min="0"
               step="0.5"

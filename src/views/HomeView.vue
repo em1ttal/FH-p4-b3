@@ -27,5 +27,6 @@ import FeaturesSection from '../components/home/FeaturesSection.vue'
 <style scoped>
 .home {
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 </style>

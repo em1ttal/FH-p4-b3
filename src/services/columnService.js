@@ -67,14 +67,14 @@ export const columnService = {
    * @param {string} columnData.title - Título de la columna
    * @returns {Promise<Object>} La columna creada con array de tareas vacío
    */
-  async createColumn(boardId, columnData) {
+  async createColumn(boardId, columnTitle) {
     await delay(300)
     if (!columns[boardId]) {
       columns[boardId] = []
     }
     const newColumn = {
       id: Math.max(0, ...columns[boardId].map((c) => c.id)) + 1,
-      title: columnData.title,
+      title: columnTitle,
       taskIds: [],
     }
     columns[boardId].push(newColumn)

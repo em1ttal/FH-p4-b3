@@ -137,9 +137,10 @@ const getOffset = (index) => {
 
 /* Estilos del gráfico circular */
 .priority-chart {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   flex-shrink: 0;
+  margin-right: 2rem;
 }
 
 .pie-chart {
@@ -169,7 +170,7 @@ const getOffset = (index) => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Indicadores de color por prioridad */

@@ -148,7 +148,7 @@ const props = defineProps({
 const selectedColumns = ref([])
 
 // Cache de datos de usuarios
-const memberData = ref(new Map())
+const memberData = ref({})
 
 /**
  * Carga los datos de un miembro y los almacena en cache
@@ -156,11 +156,11 @@ const memberData = ref(new Map())
  * @returns {Promise<Object>} Datos del miembro
  */
 const loadMemberData = async (memberId) => {
-  if (!memberData.value.has(memberId)) {
+  if (!memberData.value[memberId]) {
     const user = await userService.getUserById(memberId)
-    memberData.value.set(memberId, user)
+    memberData.value[memberId] = user
   }
-  return memberData.value.get(memberId)
+  return memberData.value[memberId]
 }
 
 /**
@@ -169,7 +169,7 @@ const loadMemberData = async (memberId) => {
  * @returns {string} URL del avatar
  */
 const getMemberAvatar = (memberId) => {
-  const user = memberData.value.get(memberId)
+  const user = memberData.value[memberId]
   return user?.avatar || `https://ui-avatars.com/api/?name=Loading...&background=random`
 }
 
@@ -179,8 +179,12 @@ const getMemberAvatar = (memberId) => {
  * @returns {string} Nombre del miembro
  */
 const getMemberName = (memberId) => {
-  const user = memberData.value.get(memberId)
-  return user?.name
+  let user = memberData.value[memberId]
+  if (!user) {
+    loadMemberData(memberId)
+    return 'Cargando...'
+  }
+  return user.name
 }
 
 // Configuración de prioridades

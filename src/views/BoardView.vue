@@ -10,7 +10,7 @@
     <header class="board-header">
       <div class="header-content">
         <div class="board-info">
-          <h1>{{ board.name }}</h1>
+          <h1>{{ board.title }}</h1>
           <p>{{ board.description }}</p>
         </div>
         <!-- Acciones principales del tablero: gestión de miembros, estadísticas y nueva tarea -->
@@ -29,7 +29,7 @@
             </button>
           </div>
           <button class="secondary-btn" @click="toggleStats">
-            {{ showStats ? 'Ver Tablero' : 'Ver Estadísticas' }}
+            {{ showStats ? 'Tablero' : 'Estadísticas' }}
           </button>
           <button class="primary-btn" @click="showNewTaskModal = true">Nueva Tarea</button>
           <button class="secondary-btn" @click="$router.push('/dashboard')">Dashboard</button>
@@ -140,13 +140,20 @@
         <h2>Añadir Miembros</h2>
         <div class="available-members">
           <div
-            v-for="user in availableUsers"
+            v-for="user in sortedAvailableUsers"
             :key="user.id"
             class="member-item"
-            @click="addMember(user.id)"
+            :class="{ added: isMember(user.id), 'not-added': !isMember(user.id) }"
+            @click="!isMember(user.id) && addMember(user.id)"
           >
             <img :src="user.avatar" :alt="user.name" />
             <span>{{ user.name }}</span>
+            <span
+              v-if="isMember(user.id)"
+              class="remove-member-btn"
+              @click.stop="removeMember(user.id)"
+              title="Eliminar del tablero"
+            > x </span>
           </div>
         </div>
         <div class="modal-actions">
@@ -158,7 +165,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { boardService } from '../services/boardService'
 import { userService } from '../services/userService'
@@ -214,6 +221,15 @@ const draggedOverColumnId = ref(null)
 
 // Estado para mostrar/ocultar estadísticas
 const showStats = ref(false)
+
+const sortedAvailableUsers = computed(() => {
+  return [...availableUsers.value].sort((a, b) => {
+    const aIsMember = isMember(a.id)
+    const bIsMember = isMember(b.id)
+    if (aIsMember === bIsMember) return 0
+    return aIsMember ? -1 : 1
+  })
+})
 
 // Hook de ciclo de vida - Carga inicial de datos
 onMounted(async () => {
@@ -288,13 +304,14 @@ const createColumn = async () => {
   if (!newColumnTitle.value.trim()) return
 
   try {
-    const newColumn = await columnService.createColumn({
-      boardId: board.value.id,
-      title: newColumnTitle.value.trim(),
-    })
+    const newColumn = await columnService.createColumn(
+      board.value.id, 
+      newColumnTitle.value.trim()
+    )
 
     columns.value.push(newColumn)
     newColumnTitle.value = ''
+    showNewColumnModal.value = false
   } catch (error) {
     console.error('Error al crear columna:', error)
   }
@@ -346,6 +363,16 @@ const addMember = async (userId) => {
     boardMembers.value = await userService.getBoardMembers(boardId)
   } catch (error) {
     console.error('Error al añadir miembro:', error)
+  }
+}
+
+const removeMember = async (userId) => {
+  try {
+    const boardId = parseInt(route.params.id)
+    await userService.removeBoardMember(boardId, userId)
+    boardMembers.value = await userService.getBoardMembers(boardId)
+  } catch (error) {
+    console.error('Error al eliminar miembro:', error)
   }
 }
 
@@ -453,6 +480,8 @@ const onDrop = async (event, targetColumn) => {
 const toggleStats = () => {
   showStats.value = !showStats.value
 }
+
+const isMember = (userId) => boardMembers.value.some(member => member.id === userId)
 </script>
 
 <style scoped>
@@ -1358,5 +1387,35 @@ const toggleStats = () => {
 
 .secondary-btn:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+.remove-member-btn {
+  margin-left: auto;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.remove-member-btn:hover {
+  background: rgba(255, 71, 87, 0.1);
+}
+
+.member-item.added {
+  background: rgba(46, 213, 115, 0.15); /* greenish for added */
+  border: 1px solid #2ed573;
+}
+.member-item.not-added {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed #aaa;
+  opacity: 0.7;
+}
+.member-item.not-added:hover {
+  background: rgba(46, 213, 115, 0.08);
+  border-color: #2ed573;
+  opacity: 1;
 }
 </style>

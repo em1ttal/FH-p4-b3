@@ -3,12 +3,12 @@
     class="board-card"
     @click="navigateToBoard"
     role="button"
-    :aria-label="'Ir al tablero ' + board.name"
+    :aria-label="'Ir al tablero ' + board.title"
     tabindex="0"
     @keydown.enter="navigateToBoard"
   >
     <div class="board-card-content">
-      <h3>{{ board.name }}</h3>
+      <h3>{{ board.title }}</h3>
       <p class="board-description">{{ board.description }}</p>
       <div class="board-meta">
         <span class="board-date" aria-label="Última actividad"

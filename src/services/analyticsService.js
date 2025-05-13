@@ -44,7 +44,10 @@ export const analyticsService = {
         !task.completed &&
         !task.blocked &&
         boardColumns
-          .find((col) => col.title.toLowerCase().includes('progress'))
+          .find((col) =>
+            col.title.toLowerCase().includes('progress') ||
+            col.title.toLowerCase().includes('progreso')
+          )
           ?.taskIds.includes(task.id),
     ).length
 

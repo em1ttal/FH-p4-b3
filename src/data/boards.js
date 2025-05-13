@@ -5,7 +5,7 @@
  *
  * @typedef {Object} Board
  * @property {number} id - ID único del tablero
- * @property {string} name - Nombre del tablero
+ * @property {string} title - Nombre del tablero
  * @property {string} description - Descripción detallada del tablero
  * @property {Date} lastActivity - Fecha de última actividad en el tablero
  * @property {string[]} members - Array de IDs de usuarios miembros del tablero
@@ -16,7 +16,7 @@
 export const boards = [
   {
     id: 1,
-    name: 'Proyecto Website',
+    title: 'Proyecto Website',
     description:
       'Desarrollo del nuevo sitio web corporativo con funcionalidades avanzadas de e-commerce',
     lastActivity: new Date('2024-03-10'),
@@ -25,7 +25,7 @@ export const boards = [
   },
   {
     id: 2,
-    name: 'Marketing Q1',
+    title: 'Marketing Q1',
     description: 'Campañas de marketing para el primer trimestre',
     lastActivity: new Date('2024-03-09'),
     members: ['user-1', 'user-2'],

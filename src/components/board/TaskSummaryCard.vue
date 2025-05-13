@@ -93,7 +93,8 @@ defineProps({
   border-radius: 0.5rem;
   height: 0.5rem;
   position: relative;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Relleno de la barra con transición suave */
@@ -106,8 +107,8 @@ defineProps({
 
 /* Texto de porcentaje de completitud */
 .completion-text {
+  top: 0.75rem;
   position: absolute;
-  top: -1.5rem;
   right: 0;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.7);

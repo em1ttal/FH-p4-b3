@@ -21,20 +21,22 @@
       role="button"
       aria-label="Desplazarse hacia abajo para más información"
     >
-      <span class="scroll-text">Más Información</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-arrow-down"
-      >
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <polyline points="19 12 12 19 5 12"></polyline>
-      </svg>
+      <a href="#features" class="scroll-link" tabindex="0">
+        <span class="scroll-text">Más Información</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-arrow-down"
+        >
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </a>
     </div>
   </header>
 </template>
@@ -140,6 +142,8 @@ const handleStart = () => {
   font-size: 1rem;
   cursor: pointer;
   animation: fadeIn 1s ease-out forwards;
+  z-index: 3;
+  pointer-events: auto;
 }
 
 .scroll-text {
@@ -172,5 +176,24 @@ const handleStart = () => {
   50% {
     transform: translateY(5px);
   }
+}
+
+.scroll-link {
+  color: white;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.scroll-link:hover, .scroll-link:focus {
+  color: white;
+  text-decoration: underline;
+  outline: none;
+  background-color: transparent;
+}
+
+/* Ensure smooth scroll for anchor links */
+:global(html) {
+  scroll-behavior: smooth;
 }
 </style>

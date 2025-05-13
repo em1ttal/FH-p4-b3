@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <section class="features" role="region" aria-labelledby="features-title">
+  <section id="features" class="features" role="region" aria-labelledby="features-title">
     <h2 id="features-title" class="section-title">Características Principales</h2>
     <div class="feature-grid" role="list" aria-label="Lista de características principales">
       <FeatureCard

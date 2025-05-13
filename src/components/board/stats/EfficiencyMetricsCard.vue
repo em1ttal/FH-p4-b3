@@ -17,7 +17,7 @@
         :aria-label="`Tiempo promedio por tarea: ${Math.round(stats.timeStats?.averageTaskTime || 0)} horas`"
       >
         <span class="stat-value">{{ Math.round(stats.timeStats?.averageTaskTime || 0) }}</span>
-        <span class="stat-label">Horas/Tarea</span>
+        <span class="stat-label"> Horas / Tarea</span>
       </div>
       <div
         class="stat-item"
@@ -26,7 +26,7 @@
         :aria-label="`Tasa de eficiencia: ${efficiencyRate}%`"
       >
         <span class="stat-value">{{ efficiencyRate }}%</span>
-        <span class="stat-label">Tasa de Eficiencia</span>
+        <span class="stat-label"> Tasa de Eficiencia</span>
       </div>
       <div
         class="stat-item"
@@ -35,7 +35,7 @@
         :aria-label="`Tasa de bloqueo: ${blockedRate}%`"
       >
         <span class="stat-value">{{ blockedRate }}%</span>
-        <span class="stat-label">Tasa de Bloqueo</span>
+        <span class="stat-label"> Tasa de Bloqueo</span>
       </div>
     </div>
 
@@ -49,6 +49,14 @@
         aria-valuemax="100"
         :aria-valuetext="`Nivel de eficiencia: ${efficiencyRate}%. ${getEfficiencyDescription}`"
       >
+        <!-- Markers every 10% (excluding 0%) -->
+        <div
+          v-for="n in 10"
+          :key="n"
+          class="chart-marker"
+          :style="{ left: `${n * 10}%` }"
+          aria-hidden="true"
+        ></div>
         <div
           class="chart-fill"
           :style="{ width: `${efficiencyRate}%` }"
@@ -135,7 +143,7 @@ const getEfficiencyDescription = computed(() => {
 }
 
 .efficiency-chart {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 /* Barra de progreso base */
@@ -144,6 +152,7 @@ const getEfficiencyDescription = computed(() => {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 
 /* Relleno de la barra con transición suave */
@@ -183,10 +192,6 @@ const getEfficiencyDescription = computed(() => {
   border-radius: 4px;
 }
 
-.chart-bar {
-  position: relative;
-}
-
 /* Tooltip accesible */
 .chart-bar:hover::after {
   content: attr(aria-valuetext);
@@ -199,5 +204,16 @@ const getEfficiencyDescription = computed(() => {
   border-radius: 4px;
   font-size: 0.875rem;
   white-space: nowrap;
+}
+
+/* Markers every 10% */
+.chart-marker {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  z-index: 1;
+  pointer-events: none;
 }
 </style>
