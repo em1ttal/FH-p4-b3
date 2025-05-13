@@ -122,6 +122,8 @@
         @click="showNewChecklistForm = true"
         v-if="!showNewChecklistForm"
         aria-label="Añadir nueva lista de verificación"
+        :disabled="!props.taskId"
+        :title="addChecklistBtnTitle"
       >
         + Añadir lista de verificación
       </button>
@@ -159,7 +161,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { aiService } from '../../services/aiService'
 import { checklistService } from '../../services/checklistService'
@@ -187,6 +189,13 @@ const emit = defineEmits(['update:checklists'])
 const showNewChecklistForm = ref(false)
 const newChecklistTitle = ref('')
 const newItemTexts = ref({})
+
+// Tooltip for add checklist button
+const addChecklistBtnTitle = computed(() => {
+  return !props.taskId
+    ? 'Guarda la tarea antes de añadir listas de verificación'
+    : 'Añadir una nueva lista de verificación'
+})
 
 /**
  * Calcula el porcentaje de progreso de una lista de verificación
@@ -485,6 +494,14 @@ const generateSubtasks = async () => {
 .add-checklist-btn:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+.add-checklist-btn:disabled,
+.add-checklist-btn:disabled:hover {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
 }
 
 /* Formulario de nueva lista */

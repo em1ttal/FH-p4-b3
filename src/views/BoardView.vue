@@ -31,7 +31,7 @@
           <button class="secondary-btn" @click="toggleStats">
             {{ showStats ? 'Tablero' : 'Estadísticas' }}
           </button>
-          <button class="primary-btn" @click="showNewTaskModal = true">Nueva Tarea</button>
+          <button class="primary-btn" @click="openNewTaskModal(-1)">Nueva Tarea</button>
           <button class="secondary-btn" @click="$router.push('/dashboard')">Dashboard</button>
         </div>
       </div>
@@ -161,6 +161,17 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal de error: no hay columnas -->
+    <div v-if="showNoColumnsModal" class="modal-overlay" @click="showNoColumnsModal = false">
+      <div class="modal-content small" @click.stop>
+        <h2>¡No hay columnas!</h2>
+        <p>Por favor, crea una columna antes de añadir una tarea.</p>
+        <div class="modal-actions">
+          <button class="primary-btn" @click="showNoColumnsModal = false">Cerrar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -190,6 +201,7 @@ const board = ref({
 const showNewTaskModal = ref(false)
 const showNewColumnModal = ref(false)
 const showMemberModal = ref(false)
+const showNoColumnsModal = ref(false)
 const selectedColumn = ref(null)
 const editingTask = ref(null)
 const newColumnTitle = ref('')
@@ -273,6 +285,13 @@ const openTaskDetails = (task) => {
 }
 
 const openNewTaskModal = (columnId) => {
+  if (!columns.value.length) {
+    showNoColumnsModal.value = true
+    return
+  }
+  if (columnId === -1) {
+    columnId = columns.value[0].id
+  }
   taskForm.value = { ...defaultTaskForm }
   selectedColumn.value = columnId
   editingTask.value = null
