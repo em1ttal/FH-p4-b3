@@ -67,7 +67,7 @@ export const aiService = {
 
     // Generar las subtareas con IDs únicos
     return selectedTasks.map((text, index) => ({
-      id: `subtask-${Date.now()}-${index}`,
+      id: `item-${Date.now()}-${index}`,
       text,
       completed: false,
     }))

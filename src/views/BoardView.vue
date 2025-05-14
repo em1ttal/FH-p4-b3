@@ -109,6 +109,7 @@
       :initial-data="taskForm"
       @save="saveTask"
       @update:modelValue="(val) => !val && closeTaskModal()"
+      @update-checklist="onChecklistChanged"
     />
 
     <!-- Modal para crear nueva columna -->
@@ -201,7 +202,7 @@ const board = ref({
 const showNewTaskModal = ref(false)
 const showNewColumnModal = ref(false)
 const showMemberModal = ref(false)
-const showNoColumnsModal = ref(false)
+const showNoColumnsModal =ref(false)
 const selectedColumn = ref(null)
 const editingTask = ref(null)
 const newColumnTitle = ref('')
@@ -278,7 +279,12 @@ const closeTaskModal = () => {
 }
 
 const openTaskDetails = (task) => {
-  taskForm.value = { ...defaultTaskForm, ...task }
+  taskForm.value = {
+    ...defaultTaskForm,
+    ...task,
+    assignedMembers: task.assignedMembers ? [...task.assignedMembers] : [],
+    labels: task.labels ? [...task.labels] : [],
+  }
   selectedColumn.value = columns.value.find((col) => col.tasks.some((t) => t.id === task.id))?.id
   editingTask.value = task
   showNewTaskModal.value = true
@@ -292,7 +298,11 @@ const openNewTaskModal = (columnId) => {
   if (columnId === -1) {
     columnId = columns.value[0].id
   }
-  taskForm.value = { ...defaultTaskForm }
+  taskForm.value = {
+    ...defaultTaskForm,
+    assignedMembers: [],
+    labels: [],
+  }
   selectedColumn.value = columnId
   editingTask.value = null
   showNewTaskModal.value = true
@@ -501,6 +511,19 @@ const toggleStats = () => {
 }
 
 const isMember = (userId) => boardMembers.value.some(member => member.id === userId)
+
+const onChecklistChanged = ({ id, checklist }) => {
+  for (const column of columns.value) {
+    const taskIndex = column.tasks.findIndex((t) => t.id === id)
+    if (taskIndex !== -1) {
+      column.tasks[taskIndex] = {
+        ...column.tasks[taskIndex],
+        checklist
+      }
+      break
+    }
+  }
+}
 </script>
 
 <style scoped>

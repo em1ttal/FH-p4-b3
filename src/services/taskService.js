@@ -41,11 +41,11 @@ export const taskService = {
     const newTask = {
       id: taskId,
       ...taskData,
-      assignedMembers: taskData.assignedMembers || [],
-      labels: taskData.labels || [],
+      assignedMembers: taskData.assignedMembers ? [...taskData.assignedMembers] : [],
+      labels: taskData.labels ? [...taskData.labels] : [],
       timeEstimation: taskData.timeEstimation || 0,
       completed: false,
-      checklists: [],
+      checklist: null,
       comments: [],
       createdBy: userId,
       createdAt: now,
@@ -75,6 +75,8 @@ export const taskService = {
     const task = tasks[boardId][taskId]
     Object.assign(task, {
       ...taskData,
+      labels: taskData.labels ? [...taskData.labels] : task.labels,
+      assignedMembers: taskData.assignedMembers ? [...taskData.assignedMembers] : task.assignedMembers,
       updatedAt: new Date().toISOString(),
     })
     return task

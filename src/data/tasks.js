@@ -31,7 +31,7 @@
  * @property {boolean} completed - Estado de completitud
  * @property {boolean} [blocked] - Indica si la tarea está bloqueada
  * @property {string} [blockReason] - Razón por la que está bloqueada
- * @property {Checklist[]} checklists - Lista de checklists
+ * @property {Checklist} checklist - Lista de checklists
  * @property {Comment[]} comments - Lista de comentarios
  * @property {string} createdBy - ID del usuario creador
  * @property {string} createdAt - Fecha de creación en formato ISO
@@ -52,16 +52,14 @@ export const tasks = {
       labels: ['#0079BF', '#61BD4F'],
       timeEstimation: 13,
       completed: false,
-      checklists: [
-        {
-          id: 'checklist-1',
-          title: 'Funcionalidades requeridas',
-          items: [
-            { id: 'item-1-1', text: 'Diseñar arquitectura de WebSockets', completed: false },
-            { id: 'item-1-2', text: 'Implementar servicio de notificaciones', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-1',
+        title: 'Funcionalidades requeridas',
+        items: [
+          { id: 'item-1-1', text: 'Diseñar arquitectura de WebSockets', completed: false },
+          { id: 'item-1-2', text: 'Implementar servicio de notificaciones', completed: false },
+        ],
+      },
       comments: [],
       createdBy: 'user-1',
       createdAt: '2025-03-20T10:00:00Z',
@@ -77,17 +75,15 @@ export const tasks = {
       labels: ['#0079BF'],
       timeEstimation: 21,
       completed: false,
-      checklists: [
-        {
-          id: 'checklist-2',
-          title: 'Funcionalidades',
-          items: [
-            { id: 'item-2-1', text: 'Implementar indexación', completed: false },
-            { id: 'item-2-2', text: 'Desarrollar filtros avanzados', completed: false },
-            { id: 'item-2-3', text: 'Integrar autocompletado', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-2',
+        title: 'Funcionalidades',
+        items: [
+          { id: 'item-2-1', text: 'Implementar indexación', completed: false },
+          { id: 'item-2-2', text: 'Desarrollar filtros avanzados', completed: false },
+          { id: 'item-2-3', text: 'Integrar autocompletado', completed: false },
+        ],
+      },
       comments: [],
       createdBy: 'user-1',
       createdAt: '2025-03-21T09:00:00Z',
@@ -105,16 +101,14 @@ export const tasks = {
       labels: ['#0079BF'],
       timeEstimation: 13,
       completed: false,
-      checklists: [
-        {
-          id: 'checklist-3',
-          title: 'Tareas',
-          items: [
-            { id: 'item-3-1', text: 'Configurar API keys', completed: true },
-            { id: 'item-3-2', text: 'Implementar tracking events', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-3',
+        title: 'Tareas',
+        items: [
+          { id: 'item-3-1', text: 'Configurar API keys', completed: true },
+          { id: 'item-3-2', text: 'Implementar tracking events', completed: false },
+        ],
+      },
       comments: [],
       createdBy: 'user-1',
       createdAt: '2025-03-20T10:00:00Z',
@@ -134,16 +128,14 @@ export const tasks = {
       completed: false,
       blocked: true,
       blockReason: 'Pendiente de análisis de métricas de producción',
-      checklists: [
-        {
-          id: 'checklist-4',
-          title: 'Optimizaciones',
-          items: [
-            { id: 'item-4-1', text: 'Análisis de performance', completed: true },
-            { id: 'item-4-2', text: 'Optimizar carga de imágenes', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-4',
+        title: 'Optimizaciones',
+        items: [
+          { id: 'item-4-1', text: 'Análisis de performance', completed: true },
+          { id: 'item-4-2', text: 'Optimizar carga de imágenes', completed: false },
+        ],
+      },
       comments: [
         {
           id: 'comment-4-1',
@@ -168,17 +160,15 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 8,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-5',
-          title: 'Entregables de diseño',
-          items: [
-            { id: 'item-5-1', text: 'Wireframes', completed: true },
-            { id: 'item-5-2', text: 'Mockups en Figma', completed: true },
-            { id: 'item-5-3', text: 'Prototipo interactivo', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-5',
+        title: 'Entregables de diseño',
+        items: [
+          { id: 'item-5-1', text: 'Wireframes', completed: true },
+          { id: 'item-5-2', text: 'Mockups en Figma', completed: true },
+          { id: 'item-5-3', text: 'Prototipo interactivo', completed: true },
+        ],
+      },
       comments: [
         {
           id: 'comment-5-1',
@@ -202,17 +192,15 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 5,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-6',
-          title: 'Setup',
-          items: [
-            { id: 'item-6-1', text: 'Inicializar proyecto Next.js', completed: true },
-            { id: 'item-6-2', text: 'Configurar ESLint y Prettier', completed: true },
-            { id: 'item-6-3', text: 'Configurar CI/CD', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-6',
+        title: 'Setup',
+        items: [
+          { id: 'item-6-1', text: 'Inicializar proyecto Next.js', completed: true },
+          { id: 'item-6-2', text: 'Configurar ESLint y Prettier', completed: true },
+          { id: 'item-6-3', text: 'Configurar CI/CD', completed: true },
+        ],
+      },
       comments: [
         {
           id: 'comment-6-1',
@@ -237,17 +225,15 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 3,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-11',
-          title: 'Documentación requerida',
-          items: [
-            { id: 'item-11-1', text: 'Guía de instalación', completed: true },
-            { id: 'item-11-2', text: 'Estándares de código', completed: true },
-            { id: 'item-11-3', text: 'Estructura del proyecto', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-11',
+        title: 'Documentación requerida',
+        items: [
+          { id: 'item-11-1', text: 'Guía de instalación', completed: true },
+          { id: 'item-11-2', text: 'Estándares de código', completed: true },
+          { id: 'item-11-3', text: 'Estructura del proyecto', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-2',
       createdAt: '2025-02-11T10:00:00Z',
@@ -264,17 +250,15 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 5,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-12',
-          title: 'Setup de testing',
-          items: [
-            { id: 'item-12-1', text: 'Configurar Jest', completed: true },
-            { id: 'item-12-2', text: 'Configurar React Testing Library', completed: true },
-            { id: 'item-12-3', text: 'Crear tests de ejemplo', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-12',
+        title: 'Setup de testing',
+        items: [
+          { id: 'item-12-1', text: 'Configurar Jest', completed: true },
+          { id: 'item-12-2', text: 'Configurar React Testing Library', completed: true },
+          { id: 'item-12-3', text: 'Crear tests de ejemplo', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-2',
       createdAt: '2025-02-12T09:00:00Z',
@@ -291,16 +275,14 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 2,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-13',
-          title: 'Configuración',
-          items: [
-            { id: 'item-13-1', text: 'Crear archivo .env.example', completed: true },
-            { id: 'item-13-2', text: 'Documentar variables', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-13',
+        title: 'Configuración',
+        items: [
+          { id: 'item-13-1', text: 'Crear archivo .env.example', completed: true },
+          { id: 'item-13-2', text: 'Documentar variables', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-2',
       createdAt: '2025-02-13T09:00:00Z',
@@ -319,18 +301,16 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 16,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-7',
-          title: 'Componentes principales',
-          items: [
-            { id: 'item-7-1', text: 'Header responsive', completed: true },
-            { id: 'item-7-2', text: 'Hero section', completed: true },
-            { id: 'item-7-3', text: 'Catálogo de productos', completed: true },
-            { id: 'item-7-4', text: 'Footer con newsletter', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-7',
+        title: 'Componentes principales',
+        items: [
+          { id: 'item-7-1', text: 'Header responsive', completed: true },
+          { id: 'item-7-2', text: 'Hero section', completed: true },
+          { id: 'item-7-3', text: 'Catálogo de productos', completed: true },
+          { id: 'item-7-4', text: 'Footer con newsletter', completed: true },
+        ],
+      },
       comments: [
         {
           id: 'comment-7-1',
@@ -354,16 +334,14 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 8,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-8',
-          title: 'Proveedores',
-          items: [
-            { id: 'item-8-1', text: 'Configurar Google OAuth', completed: true },
-            { id: 'item-8-2', text: 'Configurar Facebook OAuth', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-8',
+        title: 'Proveedores',
+        items: [
+          { id: 'item-8-1', text: 'Configurar Google OAuth', completed: true },
+          { id: 'item-8-2', text: 'Configurar Facebook OAuth', completed: true },
+        ],
+      },
       comments: [
         {
           id: 'comment-8-1',
@@ -387,18 +365,16 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 13,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-14',
-          title: 'Componentes',
-          items: [
-            { id: 'item-14-1', text: 'Botones y variantes', completed: true },
-            { id: 'item-14-2', text: 'Inputs y forms', completed: true },
-            { id: 'item-14-3', text: 'Cards y containers', completed: true },
-            { id: 'item-14-4', text: 'Documentación en Storybook', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-14',
+        title: 'Componentes',
+        items: [
+          { id: 'item-14-1', text: 'Botones y variantes', completed: true },
+          { id: 'item-14-2', text: 'Inputs y forms', completed: true },
+          { id: 'item-14-3', text: 'Cards y containers', completed: true },
+          { id: 'item-14-4', text: 'Documentación en Storybook', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-4',
       createdAt: '2025-02-20T09:00:00Z',
@@ -415,17 +391,15 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 5,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-15',
-          title: 'Optimizaciones',
-          items: [
-            { id: 'item-15-1', text: 'Configurar next/image', completed: true },
-            { id: 'item-15-2', text: 'Implementar lazy loading', completed: true },
-            { id: 'item-15-3', text: 'Optimizar formatos de imagen', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-15',
+        title: 'Optimizaciones',
+        items: [
+          { id: 'item-15-1', text: 'Configurar next/image', completed: true },
+          { id: 'item-15-2', text: 'Implementar lazy loading', completed: true },
+          { id: 'item-15-3', text: 'Optimizar formatos de imagen', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-2',
       createdAt: '2025-03-01T09:00:00Z',
@@ -442,16 +416,14 @@ export const tasks = {
       labels: ['#61BD4F'],
       timeEstimation: 3,
       completed: true,
-      checklists: [
-        {
-          id: 'checklist-16',
-          title: 'Implementación',
-          items: [
-            { id: 'item-16-1', text: 'Crear componente Breadcrumb', completed: true },
-            { id: 'item-16-2', text: 'Integrar con next/navigation', completed: true },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-16',
+        title: 'Implementación',
+        items: [
+          { id: 'item-16-1', text: 'Crear componente Breadcrumb', completed: true },
+          { id: 'item-16-2', text: 'Integrar con next/navigation', completed: true },
+        ],
+      },
       comments: [],
       createdBy: 'user-2',
       createdAt: '2025-03-03T09:00:00Z',
@@ -470,16 +442,14 @@ export const tasks = {
       labels: ['#0079BF'],
       timeEstimation: 21,
       completed: false,
-      checklists: [
-        {
-          id: 'checklist-9',
-          title: 'Funcionalidades requeridas',
-          items: [
-            { id: 'item-9-1', text: 'Diseñar dashboard', completed: true },
-            { id: 'item-9-2', text: 'Implementar gráficas', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-9',
+        title: 'Funcionalidades requeridas',
+        items: [
+          { id: 'item-9-1', text: 'Diseñar dashboard', completed: true },
+          { id: 'item-9-2', text: 'Implementar gráficas', completed: false },
+        ],
+      },
       comments: [
         {
           id: 'comment-9-1',
@@ -502,17 +472,15 @@ export const tasks = {
       labels: ['#0079BF', '#F2D600'],
       timeEstimation: 13,
       completed: false,
-      checklists: [
-        {
-          id: 'checklist-10',
-          title: 'Implementación',
-          items: [
-            { id: 'item-10-1', text: 'Configurar Stripe', completed: false },
-            { id: 'item-10-2', text: 'Configurar PayPal', completed: false },
-            { id: 'item-10-3', text: 'Implementar webhooks', completed: false },
-          ],
-        },
-      ],
+      checklist: {
+        id: 'checklist-10',
+        title: 'Implementación',
+        items: [
+          { id: 'item-10-1', text: 'Configurar Stripe', completed: false },
+          { id: 'item-10-2', text: 'Configurar PayPal', completed: false },
+          { id: 'item-10-3', text: 'Implementar webhooks', completed: false },
+        ],
+      },
       comments: [],
       createdBy: 'user-1',
       createdAt: '2025-03-21T11:00:00Z',

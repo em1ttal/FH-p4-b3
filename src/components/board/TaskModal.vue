@@ -135,10 +135,10 @@
 
           <ChecklistSection
             :task-id="safeTaskId"
-            :checklists="taskForm.checklists"
+            :checklist="taskForm.checklist"
             :task-title="taskForm.title"
             :task-description="taskForm.description"
-            @update:checklists="taskForm.checklists = $event"
+            @update:checklist="onChecklistUpdate"
           />
 
           <CommentSection
@@ -172,7 +172,7 @@ const props = defineProps({
   initialData: Object,
 })
 
-const emit = defineEmits(['update:modelValue', 'save'])
+const emit = defineEmits(['update:modelValue', 'save', 'update-checklist'])
 
 const defaultTaskForm = {
   title: '',
@@ -180,7 +180,7 @@ const defaultTaskForm = {
   priority: 'medium',
   dueDate: '',
   labels: [],
-  checklists: [],
+  checklist: null,
   comments: [],
   timeEstimation: null,
   assignedMembers: [],
@@ -321,6 +321,14 @@ const saveTask = async () => {
     columnId: props.columnId,
   })
 }
+
+const onChecklistUpdate = (newChecklist) => {
+  taskForm.value = {
+    ...taskForm.value,
+    checklist: newChecklist
+  }
+  emit('update-checklist', { ...taskForm.value, checklist: newChecklist });
+};
 
 const addDisabledTooltip = computed(() => {
   return !taskForm.value.title || !taskForm.value.description

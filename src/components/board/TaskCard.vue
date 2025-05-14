@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="task-progress" v-if="hasChecklists">
+    <div v-if="showProgressBar" class="task-progress">
       <div class="progress-bar">
         <div class="progress-fill" :style="{ width: calculateProgress + '%' }"></div>
       </div>
@@ -161,8 +161,8 @@ const getMemberName = (memberId) => {
 /**
  * Verifica si la tarea tiene listas de verificación
  */
-const hasChecklists = computed(() => {
-  return props.task.checklists && props.task.checklists.length > 0
+const hasChecklist = computed(() => {
+  return props.task.checklist && props.task.checklist.items && props.task.checklist.items.length > 0
 })
 
 /**
@@ -170,20 +170,15 @@ const hasChecklists = computed(() => {
  * @returns {number} Porcentaje de progreso (0-100)
  */
 const calculateProgress = computed(() => {
-  if (!props.task.checklists || props.task.checklists.length === 0) return 0
-
-  let totalItems = 0
-  let completedItems = 0
-
-  props.task.checklists.forEach((checklist) => {
-    if (checklist.items) {
-      totalItems += checklist.items.length
-      completedItems += checklist.items.filter((item) => item.completed).length
-    }
-  })
-
-  return totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100)
+  if (!props.task.checklist || !props.task.checklist.items || props.task.checklist.items.length === 0) return 0
+  const totalItems = props.task.checklist.items.length
+  const completedItems = props.task.checklist.items.filter((item) => item.completed).length
+  return Math.round((completedItems / totalItems) * 100)
 })
+
+const showProgressBar = computed(() => {
+  return props.task.checklist && Array.isArray(props.task.checklist.items) && props.task.checklist.items.length > 0;
+});
 </script>
 
 <style scoped>

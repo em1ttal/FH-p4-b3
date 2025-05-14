@@ -9,101 +9,149 @@ import { delay } from '../utils/asyncUtils'
 
 export const checklistService = {
   /**
-   * Añade una nueva checklist a una tarea
+   * Obtiene la checklist de una tarea
    * @async
    * @param {string|number} boardId - ID del tablero
    * @param {string} taskId - ID de la tarea
-   * @param {string} checklistTitle - Título de la checklist
-   * @param {Array<Object>} [initialItems=[]] - Items iniciales de la checklist
-   * @param {string} [initialItems[].id] - ID opcional del item
-   * @param {string} initialItems[].text - Texto del item
-   * @param {boolean} [initialItems[].completed=false] - Estado de completitud del item
-   * @returns {Promise<Object>} La checklist creada
+   * @returns {Promise<Object>} La checklist de la tarea
    * @throws {Error} Si la tarea no existe
    */
-  async addChecklist(boardId, taskId, checklistTitle, initialItems = []) {
-    await delay(300)
+  async getChecklist(boardId, taskId) {
+    await delay(200)
     if (!tasks[boardId] || !tasks[boardId][taskId]) {
       throw new Error('Task not found')
     }
-
-    const task = tasks[boardId][taskId]
-    const newChecklist = {
-      id: `checklist-${Date.now()}`,
-      title: checklistTitle,
-      items: initialItems.map((item) => ({
-        ...item,
-        id: item.id || `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      })),
-    }
-
-    if (!task.checklists) {
-      task.checklists = []
-    }
-    task.checklists.push(newChecklist)
-    return newChecklist
+    return JSON.parse(JSON.stringify(tasks[boardId][taskId].checklist || null))
   },
 
   /**
-   * Actualiza una checklist existente
+   * Añade un nuevo item a la checklist de una tarea
    * @async
    * @param {string|number} boardId - ID del tablero
    * @param {string} taskId - ID de la tarea
-   * @param {string} checklistId - ID de la checklist
-   * @param {Object} updates - Campos a actualizar
-   * @param {string} [updates.title] - Nuevo título de la checklist
-   * @param {Array<Object>} [updates.items] - Nueva lista de items
-   * @returns {Promise<Object>} La checklist actualizada
-   * @throws {Error} Si la tarea o la checklist no existen
+   * @param {string} text - Texto del item
+   * @returns {Promise<Object>} El item creado
+   * @throws {Error} Si la tarea no existe
    */
-  async updateChecklist(boardId, taskId, checklistId, updates) {
-    await delay(300)
+  async addItem(boardId, taskId, text) {
+    await delay(200)
     if (!tasks[boardId] || !tasks[boardId][taskId]) {
       throw new Error('Task not found')
     }
-
     const task = tasks[boardId][taskId]
-    const checklist = task.checklists.find((c) => c.id === checklistId)
-    if (!checklist) throw new Error('Checklist not found')
-
-    Object.assign(checklist, updates)
+    if (!task.checklist) {
+      // Si no existe checklist, crear una por defecto
+      task.checklist = {
+        id: `checklist-${Date.now()}`,
+        title: 'Checklist',
+        items: [],
+      }
+    }
+    const newItem = {
+      id: `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      text,
+      completed: false,
+    }
+    task.checklist.items.push(newItem)
     task.updatedAt = new Date().toISOString()
-    return checklist
+    return JSON.parse(JSON.stringify(newItem))
   },
 
   /**
-   * Elimina una checklist de una tarea
+   * Actualiza el texto de un item de la checklist
    * @async
-   * @param {string|number} boardId - ID del tablero
-   * @param {string} taskId - ID de la tarea
-   * @param {string} checklistId - ID de la checklist a eliminar
+   * @param {string|number} boardId
+   * @param {string} taskId
+   * @param {string} itemId
+   * @param {string} newText
+   * @returns {Promise<Object>} El item actualizado
+   */
+  async updateItem(boardId, taskId, itemId, newText) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) throw new Error('Task not found')
+    const task = tasks[boardId][taskId]
+    const item = task.checklist?.items.find((i) => i.id === itemId)
+    if (!item) throw new Error('Item not found')
+    item.text = newText
+    task.updatedAt = new Date().toISOString()
+    return JSON.parse(JSON.stringify(item))
+  },
+
+  /**
+   * Elimina un item de la checklist
+   * @async
+   * @param {string|number} boardId
+   * @param {string} taskId
+   * @param {string} itemId
    * @returns {Promise<void>}
-   * @throws {Error} Si la tarea no existe
    */
-  async deleteChecklist(boardId, taskId, checklistId) {
-    await delay(300)
-    if (!tasks[boardId] || !tasks[boardId][taskId]) {
-      throw new Error('Task not found')
-    }
-
+  async deleteItem(boardId, taskId, itemId) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) throw new Error('Task not found')
     const task = tasks[boardId][taskId]
-    task.checklists = task.checklists.filter((c) => c.id !== checklistId)
+    if (!task.checklist) return
+    task.checklist.items = task.checklist.items.filter((i) => i.id !== itemId)
     task.updatedAt = new Date().toISOString()
   },
 
   /**
-   * Obtiene todas las checklists de una tarea
+   * Alterna el estado de completitud de un item
    * @async
-   * @param {string|number} boardId - ID del tablero
-   * @param {string} taskId - ID de la tarea
-   * @returns {Promise<Array<Object>>} Lista de checklists de la tarea
-   * @throws {Error} Si la tarea no existe
+   * @param {string|number} boardId
+   * @param {string} taskId
+   * @param {string} itemId
+   * @returns {Promise<Object>} El item actualizado
    */
-  async getChecklists(boardId, taskId) {
-    await delay(300)
-    if (!tasks[boardId] || !tasks[boardId][taskId]) {
-      throw new Error('Tarea no encontrada')
+  async toggleItem(boardId, taskId, itemId) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) throw new Error('Task not found')
+    const task = tasks[boardId][taskId]
+    const item = task.checklist?.items.find((i) => i.id === itemId)
+    if (!item) throw new Error('Item not found')
+    item.completed = !item.completed
+    task.updatedAt = new Date().toISOString()
+    return JSON.parse(JSON.stringify(item))
+  },
+
+  /**
+   * Actualiza el título de la checklist
+   * @async
+   * @param {string|number} boardId
+   * @param {string} taskId
+   * @param {string} newTitle
+   * @returns {Promise<string>} El nuevo título
+   */
+  async updateTitle(boardId, taskId, newTitle) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) throw new Error('Task not found')
+    const task = tasks[boardId][taskId]
+    if (!task.checklist) throw new Error('Checklist not found')
+    task.checklist.title = newTitle
+    task.updatedAt = new Date().toISOString()
+    return JSON.parse(JSON.stringify(newTitle))
+  },
+
+  /**
+   * Reemplaza todos los items de la checklist (por ejemplo, para IA)
+   * @async
+   * @param {string|number} boardId
+   * @param {string} taskId
+   * @param {Array<Object>} items
+   * @returns {Promise<Array<Object>>} Los nuevos items
+   */
+  async setItems(boardId, taskId, items) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) throw new Error('Task not found')
+    const task = tasks[boardId][taskId]
+    if (!task.checklist) {
+      task.checklist = {
+        id: `checklist-${Date.now()}`,
+        title: 'Checklist',
+        items: [],
+      }
     }
-    return tasks[boardId][taskId].checklists || []
+    task.checklist.items = items
+    task.updatedAt = new Date().toISOString()
+    return JSON.parse(JSON.stringify(items))
   },
 }
