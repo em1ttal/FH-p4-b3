@@ -40,6 +40,7 @@
                 class="action-button"
                 @click="estimateTime"
                 :disabled="!taskForm.title || !taskForm.description"
+                :title="addDisabledTooltip"
               >
                 <span class="icon">✨</span>
                 Calcular con IA
@@ -79,6 +80,7 @@
                 class="action-button"
                 @click="optimizeDescription"
                 :disabled="!taskForm.description"
+                :title="addDisabledTooltip"
               >
                 <span class="icon">✨</span>
                 Optimizar con IA
@@ -180,7 +182,7 @@ const defaultTaskForm = {
   labels: [],
   checklists: [],
   comments: [],
-  timeEstimate: null,
+  timeEstimation: null,
   assignedMembers: [],
 }
 
@@ -297,7 +299,7 @@ const optimizeDescription = async () => {
 const estimateTime = async () => {
   if (!taskForm.value.title || !taskForm.value.description) return
   try {
-    taskForm.value.timeEstimate = await aiService.suggestTimeEstimation({
+    taskForm.value.timeEstimation = await aiService.suggestTimeEstimation({
       title: taskForm.value.title,
       description: taskForm.value.description,
     })
@@ -319,6 +321,12 @@ const saveTask = async () => {
     columnId: props.columnId,
   })
 }
+
+const addDisabledTooltip = computed(() => {
+  return !taskForm.value.title || !taskForm.value.description
+    ? 'Primero se necesita un título y una descripción'
+    : 'Estimación de IA'
+})
 </script>
 
 <style scoped>

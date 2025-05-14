@@ -15,6 +15,7 @@
         class="action-button"
         @click="generateSubtasks"
         :disabled="!taskTitle || !taskDescription || !taskId"
+        :title="generateSubtasksTooltip"
         aria-label="Generar subtareas con IA"
         :aria-disabled="!taskTitle || !taskDescription || !taskId"
       >
@@ -363,6 +364,12 @@ const generateSubtasks = async () => {
     console.error('Error al generar subtareas:', error)
   }
 }
+
+const generateSubtasksTooltip = computed(() => {
+  return !props.taskTitle || !props.taskDescription
+    ? 'Primero crea una subtarea'
+    : 'Generar con IA'
+})
 </script>
 
 <!-- 
