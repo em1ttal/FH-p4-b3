@@ -9,7 +9,7 @@
           <div class="form-group">
             <label>Título</label>
             <input
-              v-model="taskForm.time"
+              v-model="taskForm.title"
               type="text"
               placeholder="Título de la tarea"
               class="styled-input"
