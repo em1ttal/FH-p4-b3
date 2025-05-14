@@ -323,11 +323,12 @@ const saveTask = async () => {
 }
 
 const onChecklistUpdate = (newChecklist) => {
+  // Clone the checklist to ensure reactivity
   taskForm.value = {
     ...taskForm.value,
-    checklist: newChecklist
+    checklist: newChecklist ? JSON.parse(JSON.stringify(newChecklist)) : null
   }
-  emit('update-checklist', { ...taskForm.value, checklist: newChecklist });
+  emit('update-checklist', { id: taskForm.value.id, checklist: newChecklist });
 };
 
 const addDisabledTooltip = computed(() => {

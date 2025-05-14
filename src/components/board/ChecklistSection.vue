@@ -230,7 +230,7 @@ const createChecklistTooltip = computed(() => {
 const createChecklist = async () => {
   try {
     const boardId = parseInt(route.params.id)
-    await checklistService.addItem(boardId, props.taskId, '')
+    await checklistService.createChecklist(boardId, props.taskId)
     const updated = await checklistService.getChecklist(boardId, props.taskId)
     emit('update:checklist', updated)
   } catch (error) {

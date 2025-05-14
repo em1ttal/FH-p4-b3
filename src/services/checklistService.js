@@ -21,7 +21,27 @@ export const checklistService = {
     if (!tasks[boardId] || !tasks[boardId][taskId]) {
       throw new Error('Task not found')
     }
-    return JSON.parse(JSON.stringify(tasks[boardId][taskId].checklist || null))
+    return tasks[boardId][taskId].checklist || null
+  },
+
+  /**
+   * Crea una nueva checklist para una tarea
+   * @async
+   * @param {string|number} boardId - ID del tablero
+   * @param {string} taskId - ID de la tarea
+   * @returns {Promise<void>} 
+   */
+  async createChecklist(boardId, taskId) {
+    await delay(200)
+    if (!tasks[boardId] || !tasks[boardId][taskId]) {
+      throw new Error('Task not found')
+    }
+    const task = tasks[boardId][taskId]
+    task.checklist = {
+      id: `checklist-${Date.now()}`,
+      title: 'Checklist',
+      items: [],
+    }
   },
 
   /**
@@ -39,14 +59,6 @@ export const checklistService = {
       throw new Error('Task not found')
     }
     const task = tasks[boardId][taskId]
-    if (!task.checklist) {
-      // Si no existe checklist, crear una por defecto
-      task.checklist = {
-        id: `checklist-${Date.now()}`,
-        title: 'Checklist',
-        items: [],
-      }
-    }
     const newItem = {
       id: `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       text,
@@ -54,7 +66,7 @@ export const checklistService = {
     }
     task.checklist.items.push(newItem)
     task.updatedAt = new Date().toISOString()
-    return JSON.parse(JSON.stringify(newItem))
+    return newItem
   },
 
   /**
@@ -74,7 +86,7 @@ export const checklistService = {
     if (!item) throw new Error('Item not found')
     item.text = newText
     task.updatedAt = new Date().toISOString()
-    return JSON.parse(JSON.stringify(item))
+    return item
   },
 
   /**
@@ -110,7 +122,7 @@ export const checklistService = {
     if (!item) throw new Error('Item not found')
     item.completed = !item.completed
     task.updatedAt = new Date().toISOString()
-    return JSON.parse(JSON.stringify(item))
+    return item
   },
 
   /**
@@ -128,7 +140,7 @@ export const checklistService = {
     if (!task.checklist) throw new Error('Checklist not found')
     task.checklist.title = newTitle
     task.updatedAt = new Date().toISOString()
-    return JSON.parse(JSON.stringify(newTitle))
+    return newTitle
   },
 
   /**
@@ -152,6 +164,6 @@ export const checklistService = {
     }
     task.checklist.items = items
     task.updatedAt = new Date().toISOString()
-    return JSON.parse(JSON.stringify(items))
+    return items
   },
 }
