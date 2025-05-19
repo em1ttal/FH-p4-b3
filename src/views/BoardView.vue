@@ -72,12 +72,12 @@
           </div>
 
           <!-- Lista de tareas dentro de cada columna -->
-          <div class="task-list">
+          <div class="task-list" :key="column.tasks.map(t => t.id + '-' + (t.labels ? t.labels.join(',') : '') + '-' + (t.assignedMembers ? t.assignedMembers.join(',') : '')).join('|')">
             <TaskCard
               v-for="task in column.tasks"
               :key="task.id"
               :task="task"
-              :label-names="labelColors"
+              :labelNames="labelColors"
               @dragstart="startDragging($event, task, column)"
               @dragend="stopDragging"
               @click="openTaskDetails(task)"
@@ -364,9 +364,13 @@ const saveTask = async (taskData) => {
       const updatedTask = await taskService.updateTask(boardId, editingTask.value.id, taskData)
       // Actualizar estado local
       for (const column of columns.value) {
-        const task = column.tasks.find((t) => t.id === editingTask.value.id)
-        if (task) {
-          Object.assign(task, updatedTask)
+        const idx = column.tasks.findIndex((t) => t.id === editingTask.value.id)
+        if (idx !== -1) {
+          column.tasks = [
+            ...column.tasks.slice(0, idx),
+            updatedTask,
+            ...column.tasks.slice(idx + 1)
+          ]
           break
         }
       }

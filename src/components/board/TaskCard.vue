@@ -96,7 +96,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  labelNames: {
+  ºlabelNames: {
     type: Object,
     default: () => ({}),
   },
